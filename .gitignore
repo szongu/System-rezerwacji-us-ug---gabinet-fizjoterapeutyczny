@@ -1,0 +1,10 @@
+includes/config.php
+
+# Pliki systemowe / edytorów
+.DS_Store
+Thumbs.db
+.vscode/
+*.log
+
+/vendor/
+composer.lock
