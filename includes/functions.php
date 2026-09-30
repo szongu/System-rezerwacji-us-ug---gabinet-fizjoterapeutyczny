@@ -27,3 +27,26 @@ function getFlash(): ?array
     unset($_SESSION['flash']);
     return $flash;
 }
+
+function formatPrice(float $price): string
+{
+    return number_format($price, 2, ',', ' ') . ' zł';
+}
+
+function formatDate(string $date): string
+{
+    $ts = strtotime($date);
+    return $ts ? date('d.m.Y', $ts) : $date;
+}
+
+function formatTime(string $time): string
+{
+    // Akceptuje zarówno "HH:MM:SS" jak i "HH:MM".
+    return substr($time, 0, 5);
+}
+
+function formatDateTime(string $datetime): string
+{
+    $ts = strtotime($datetime);
+    return $ts ? date('d.m.Y H:i', $ts) : $datetime;
+}
