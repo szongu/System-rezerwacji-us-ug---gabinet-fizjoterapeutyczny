@@ -85,3 +85,24 @@ function dayName(int $dayOfWeek): string
     ];
     return $names[$dayOfWeek] ?? '?';
 }
+
+function isValidEmail(string $email): bool
+{
+    return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+}
+
+/** Prosta walidacja polskiego numeru telefonu: 9 cyfr, opcjonalne spacje/myślniki/+48. */
+function isValidPhone(string $phone): bool
+{
+    $digits = preg_replace('/[^0-9]/', '', $phone);
+    $digits = preg_replace('/^48/', '', $digits); // usuń prefiks kraju, jeśli podany
+    return preg_match('/^\d{9}$/', $digits) === 1;
+}
+
+/** Silne hasło: min. 8 znaków, przynajmniej jedna litera i jedna cyfra.*/
+function isStrongPassword(string $password): bool
+{
+    return strlen($password) >= 8
+        && preg_match('/[A-Za-ząćęłńóśźż]/i', $password) === 1
+        && preg_match('/\d/', $password) === 1;
+}
