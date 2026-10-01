@@ -106,3 +106,33 @@ function isStrongPassword(string $password): bool
         && preg_match('/[A-Za-ząćęłńóśźż]/i', $password) === 1
         && preg_match('/\d/', $password) === 1;
 }
+
+/** Zapisuje wpis w logu działań administratora (funkcja dodatkowa - historia operacji). */
+function logAdminAction(int $adminId, string $action): void
+{
+    try {
+        $stmt = getDb()->prepare('INSERT INTO admin_log (admin_id, action) VALUES (:admin_id, :action)');
+        $stmt->execute(['admin_id' => $adminId, 'action' => $action]);
+    } catch (PDOException $e) {
+        error_log('Nie udalo sie zapisac wpisu admin_log: ' . $e->getMessage());
+    }
+}
+
+/** Zapisuje zmianę statusu rezerwacji w historii (funkcja dodatkowa). */
+function logStatusChange(int $reservationId, ?string $oldStatus, string $newStatus, ?int $changedBy): void
+{
+    try {
+        $stmt = getDb()->prepare(
+            'INSERT INTO reservation_status_history (reservation_id, old_status, new_status, changed_by)
+             VALUES (:reservation_id, :old_status, :new_status, :changed_by)'
+        );
+        $stmt->execute([
+            'reservation_id' => $reservationId,
+            'old_status'     => $oldStatus,
+            'new_status'     => $newStatus,
+            'changed_by'     => $changedBy,
+        ]);
+    } catch (PDOException $e) {
+        error_log('Nie udalo sie zapisac historii statusu: ' . $e->getMessage());
+    }
+}
