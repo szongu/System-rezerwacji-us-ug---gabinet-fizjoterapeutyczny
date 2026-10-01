@@ -71,3 +71,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageTitle = 'Moje konto';
 require __DIR__ . '/includes/header.php';
 ?>
+
+<h1 class="h3 mb-4">Moje konto</h1>
+
+<?php if (!empty($errors)): ?>
+    <div class="alert alert-danger">
+        <?php foreach ($errors as $err): ?><div><?= e($err) ?></div><?php endforeach; ?>
+    </div>
+<?php endif; ?>
+<?php if ($success): ?>
+    <div class="alert alert-success"><?= e($success) ?></div>
+<?php endif; ?>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Dane profilu</div>
+            <div class="card-body">
+                <form method="post">
+                    <?= csrfField() ?>
+                    <input type="hidden" name="form_type" value="profile">
+                    <div class="mb-3">
+                        <label class="form-label">Imię</label>
+                        <input type="text" name="first_name" class="form-control" required maxlength="60"
+                               value="<?= e($user['first_name']) ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nazwisko</label>
+                        <input type="text" name="last_name" class="form-control" required maxlength="60"
+                               value="<?= e($user['last_name']) ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">E-mail</label>
+                        <input type="email" class="form-control" value="<?= e($user['email']) ?>" disabled>
+                        <div class="form-text">Zmiana adresu e-mail nie jest obsługiwana w tej wersji systemu.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Telefon</label>
+                        <input type="text" name="phone" class="form-control" required value="<?= e($user['phone']) ?>">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Rola</label>
+                        <div><span class="badge bg-primary badge-role"><?= e($user['role']) ?></span></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Zmiana hasła</div>
+            <div class="card-body">
+                <form method="post">
+                    <?= csrfField() ?>
+                    <input type="hidden" name="form_type" value="password">
+                    <div class="mb-3">
+                        <label class="form-label">Aktualne hasło</label>
+                        <input type="password" name="current_password" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Nowe hasło</label>
+                        <input type="password" name="new_password" class="form-control" required minlength="8">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Powtórz nowe hasło</label>
+                        <input type="password" name="new_password_confirm" class="form-control" required minlength="8">
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary">Zmień hasło</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php require __DIR__ . '/includes/footer.php'; ?>
