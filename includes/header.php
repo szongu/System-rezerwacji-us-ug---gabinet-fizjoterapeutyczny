@@ -14,3 +14,13 @@ $flash = getFlash();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body class="d-flex flex-column min-vh-100">
+
+<?php require __DIR__ . '/navbar.php'; ?>
+
+<main class="container flex-grow-1 py-4">
+    <?php if ($flash): ?>
+        <div class="alert alert-<?= e($flash['type']) ?> alert-dismissible fade show" role="alert">
+            <?= e($flash['message']) ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Zamknij"></button>
+        </div>
+    <?php endif; ?>
