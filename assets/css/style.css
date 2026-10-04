@@ -39,3 +39,46 @@ body {
     gap: .5rem;
     margin-bottom: 1.5rem;
 }
+
+.step-indicator .step {
+    padding: .35rem .9rem;
+    border-radius: 2rem;
+    background: #e9ecef;
+    color: #6c757d;
+    font-size: .875rem;
+}
+
+.step-indicator .step.active {
+    background: var(--brand-primary);
+    color: #fff;
+    font-weight: 600;
+}
+
+.step-indicator .step.done {
+    background: var(--brand-soft);
+    color: var(--brand-primary);
+}
+
+.slot-btn {
+    min-width: 5.5rem;
+}
+
+.table-responsive-card th {
+    white-space: nowrap;
+}
+
+footer a {
+    color: #cfd8e3;
+}
+
+.badge-role {
+    text-transform: uppercase;
+    font-size: .7rem;
+    letter-spacing: .04em;
+}
+
+@media (max-width: 576px) {
+    .hero {
+        padding: 2rem 1.25rem;
+    }
+}
