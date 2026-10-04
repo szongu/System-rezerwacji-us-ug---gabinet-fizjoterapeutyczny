@@ -1,0 +1,41 @@
+:root {
+    --brand-primary: #0d6efd;
+    --brand-soft: #eef4ff;
+}
+
+body {
+    background-color: #f7f9fc;
+}
+
+.navbar-brand {
+    letter-spacing: .3px;
+}
+
+.hero {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+    color: #fff;
+    border-radius: .75rem;
+    padding: 3rem 2rem;
+}
+
+.hero p.lead {
+    max-width: 640px;
+}
+
+.card-service {
+    height: 100%;
+    transition: transform .15s ease, box-shadow .15s ease;
+    border: 1px solid #e6e9ef;
+}
+
+.card-service:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .08);
+}
+
+.step-indicator {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    margin-bottom: 1.5rem;
+}
