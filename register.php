@@ -72,3 +72,63 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $pageTitle = 'Rejestracja';
 require __DIR__ . '/includes/header.php';
 ?>
+
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-5">
+        <h1 class="h3 mb-4">Załóż konto klienta</h1>
+
+        <?php if (!empty($errors)): ?>
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    <?php foreach ($errors as $err): ?>
+                        <li><?= e($err) ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
+
+        <form method="post" novalidate>
+            <?= csrfField() ?>
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <label class="form-label">Imię</label>
+                    <input type="text" name="first_name" class="form-control" required maxlength="60"
+                           value="<?= e($values['first_name']) ?>">
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Nazwisko</label>
+                    <input type="text" name="last_name" class="form-control" required maxlength="60"
+                           value="<?= e($values['last_name']) ?>">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Adres e-mail</label>
+                <input type="email" name="email" class="form-control" required maxlength="150"
+                       value="<?= e($values['email']) ?>">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Telefon</label>
+                <input type="text" name="phone" class="form-control" required placeholder="np. 600100200"
+                       value="<?= e($values['phone']) ?>">
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col-6">
+                    <label class="form-label">Hasło</label>
+                    <input type="password" name="password" class="form-control" required minlength="8">
+                </div>
+                <div class="col-6">
+                    <label class="form-label">Powtórz hasło</label>
+                    <input type="password" name="password_confirm" class="form-control" required minlength="8">
+                </div>
+            </div>
+            <p class="form-text">Hasło: min. 8 znaków, przynajmniej jedna litera i jedna cyfra.</p>
+            <button type="submit" class="btn btn-primary w-100">Zarejestruj się</button>
+        </form>
+
+        <p class="text-center mt-3 mb-0">
+            Masz już konto? <a href="<?= e(basePath('login.php')) ?>">Zaloguj się</a>
+        </p>
+    </div>
+</div>
+
+<?php require __DIR__ . '/includes/footer.php'; ?>
