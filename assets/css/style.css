@@ -1,84 +1,597 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* -----------------------------------------------------------
+   1. Zmienne marki — motyw jasny 
+   ----------------------------------------------------------- */
 :root {
-    --brand-primary: #0d6efd;
-    --brand-soft: #eef4ff;
+    --brand-primary: #0f766e;        
+    --brand-primary-dark: #0b5a54;
+    --brand-primary-light: #14b8a6;
+    --brand-primary-rgb: 15, 118, 110;
+
+    --brand-ink: #0f172a;            
+    --brand-bg: #f8fafc;             
+    --brand-bg-rgb: 248, 250, 252;
+    --brand-surface: #ffffff;
+    --brand-surface-rgb: 255, 255, 255;
+    --brand-border: #e2e8f0;         
+    --brand-muted: #64748b;          
+
+    --navbar-bg: #0f172a;            
+    --navbar-border: rgba(255, 255, 255, .08);
+
+    --glass-bg: rgba(255, 255, 255, .85);
+    --glass-border: var(--brand-border);
+
+    --radius-sm: .5rem;
+    --radius-md: .85rem;
+    --radius-lg: 1.1rem;
+    --radius-pill: 50rem;
+
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, .06);
+    --shadow-md: 0 .35rem 1rem rgba(15, 23, 42, .08);
+    --shadow-lg: 0 .75rem 2rem rgba(15, 23, 42, .12);
+
+    --transition-base: .18s ease;
+    --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-display: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+    color-scheme: light;
+
+    --bs-primary: var(--brand-primary);
+    --bs-primary-rgb: var(--brand-primary-rgb);
+    --bs-link-color: var(--brand-primary);
+    --bs-link-hover-color: var(--brand-primary-dark);
+    --bs-body-font-family: var(--font-body);
+    --bs-body-bg: var(--brand-bg);
+    --bs-body-color: var(--brand-ink);
+    --bs-border-radius: var(--radius-sm);
+    --bs-border-radius-lg: var(--radius-md);
+    --bs-border-radius-sm: .4rem;
+    --bs-box-shadow: var(--shadow-md);
+}
+
+/* -----------------------------------------------------------
+   1b. Zmienne marki — motyw ciemny
+   ----------------------------------------------------------- */
+html[data-theme="dark"] {
+    color-scheme: dark;
+    --brand-ink: #e2e8f0;
+    --brand-bg: #0b1220;
+    --brand-bg-rgb: 11, 18, 32;
+    --brand-surface: #141b2d;
+    --brand-surface-rgb: 20, 27, 45;
+    --brand-border: #263142;
+    --brand-muted: #94a3b8;
+    --brand-primary-light: #2dd4bf;
+
+    --glass-bg: rgba(20, 27, 45, .85);
+    --glass-border: var(--brand-border);
+    --navbar-border: rgba(255, 255, 255, .06);
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .35);
+    --shadow-md: 0 .35rem 1rem rgba(0, 0, 0, .35);
+    --shadow-lg: 0 .75rem 2rem rgba(0, 0, 0, .45);
+
+    --bs-body-bg: var(--brand-bg);
+    --bs-body-color: var(--brand-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root { --transition-base: 0s; }
+}
+
+/* -----------------------------------------------------------
+   2. Baza / typografia
+   ----------------------------------------------------------- */
+html {
+    transition: background-color .25s ease;
 }
 
 body {
-    background-color: #f7f9fc;
+    background-color: var(--brand-bg);
+    color: var(--brand-ink);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    transition: background-color .25s ease, color .25s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -.01em;
+    color: var(--brand-ink);
+}
+
+.lead { font-weight: 500; color: var(--brand-muted); }
+
+a { transition: color var(--transition-base); }
+
+html[data-theme="dark"] .text-muted {
+    color: #94a3b8 !important;
+}
+
+html[data-theme="dark"] .card-service.text-dark,
+html[data-theme="dark"] a.text-dark {
+    color: var(--brand-ink) !important;
+}
+
+::selection {
+    background: rgba(var(--brand-primary-rgb), .22);
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: var(--radius-pill); }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* -----------------------------------------------------------
+   3. Nawigacja — spokojna, stała ciemna belka 
+   ----------------------------------------------------------- */
+.navbar.bg-primary,
+.navbar-dark.bg-primary {
+    background: var(--navbar-bg) !important;
+    border-bottom: 1px solid var(--navbar-border);
+}
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    padding-top: .7rem;
+    padding-bottom: .7rem;
+    transition: box-shadow var(--transition-base), padding var(--transition-base);
+}
+
+.navbar.navbar-scrolled {
+    box-shadow: var(--shadow-md);
+    padding-top: .5rem;
+    padding-bottom: .5rem;
 }
 
 .navbar-brand {
-    letter-spacing: .3px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    color: #f8fafc;
 }
 
+.navbar-brand .bi-heart-pulse {
+    color: var(--brand-primary-light);
+}
+
+.navbar-nav .nav-link {
+    position: relative;
+    font-weight: 500;
+    padding-left: .85rem !important;
+    padding-right: .85rem !important;
+}
+
+.navbar-nav .nav-link::after {
+    content: "";
+    position: absolute;
+    left: .85rem;
+    right: .85rem;
+    bottom: .1rem;
+    height: 2px;
+    background: var(--brand-primary-light);
+    border-radius: var(--radius-pill);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-base);
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+    transform: scaleX(1);
+}
+
+/* -----------------------------------------------------------
+   4. Hero — czysta, neutralna karta 
+   ----------------------------------------------------------- */
 .hero {
-    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
-    color: #fff;
-    border-radius: .75rem;
-    padding: 3rem 2rem;
+    position: relative;
+    border-radius: var(--radius-lg);
+    padding: 3.5rem 2.5rem;
+    background: var(--brand-surface);
+    border: 1px solid var(--brand-border);
+    box-shadow: var(--shadow-sm);
+}
+
+.hero h1 {
+    color: var(--brand-ink);
+    font-size: clamp(1.8rem, 1.4rem + 1.6vw, 2.75rem);
 }
 
 .hero p.lead {
     max-width: 640px;
+    color: var(--brand-muted);
+}
+
+/* Przyciski hero korzystają z klas Bootstrapa */
+.hero .btn-light {
+    background-color: var(--brand-primary);
+    color: #fff;
+    border: none;
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+}
+
+.hero .btn-light:hover {
+    background-color: var(--brand-primary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.hero .btn-outline-light {
+    color: var(--brand-ink);
+    border: 1px solid var(--brand-border);
+    background: transparent;
+    font-weight: 600;
+}
+
+.hero .btn-outline-light:hover {
+    background: var(--brand-bg);
+    border-color: var(--brand-muted);
+    color: var(--brand-ink);
+    transform: translateY(-1px);
+}
+
+/* -----------------------------------------------------------
+   5. Karty
+   ----------------------------------------------------------- */
+.card {
+    background-color: var(--brand-surface);
+    border: 1px solid var(--brand-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+    background-color: var(--brand-bg);
+    border-bottom: 1px solid var(--brand-border);
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--brand-ink);
+    border-top-left-radius: var(--radius-md);
+    border-top-right-radius: var(--radius-md);
 }
 
 .card-service {
+    position: relative;
     height: 100%;
-    transition: transform .15s ease, box-shadow .15s ease;
-    border: 1px solid #e6e9ef;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--brand-border);
+    background-color: var(--brand-surface);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
 }
 
 .card-service:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .08);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--brand-primary);
 }
 
+.card.text-center .fs-3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+.card.border-primary {
+    border-color: var(--brand-primary) !important;
+    background-color: var(--brand-surface);
+}
+
+/* -----------------------------------------------------------
+   6. Przyciski — jednolity kolor, bez poświaty
+   ----------------------------------------------------------- */
+.btn {
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    transition: transform var(--transition-base), box-shadow var(--transition-base), background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+}
+
+.btn-sm { border-radius: .45rem; }
+
+.btn-primary {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--brand-primary-dark);
+    border-color: var(--brand-primary-dark);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-outline-primary {
+    color: var(--brand-primary);
+    border-color: var(--brand-primary);
+}
+
+html[data-theme="dark"] .btn-outline-primary {
+    color: var(--brand-primary-light);
+    border-color: var(--brand-primary-light);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+    color: #fff;
+}
+
+.btn-check:focus + .btn,
+.btn:focus {
+    box-shadow: 0 0 0 .2rem rgba(var(--brand-primary-rgb), .22);
+}
+
+/* -----------------------------------------------------------
+   7. Odznaki i statusy
+   ----------------------------------------------------------- */
+.badge {
+    font-weight: 600;
+    letter-spacing: .01em;
+    border-radius: var(--radius-pill);
+    padding: .42em .8em;
+}
+
+.badge.bg-primary { background: var(--brand-primary) !important; }
+.badge.bg-primary-subtle { background-color: rgba(var(--brand-primary-rgb), .14) !important; }
+.badge.text-primary-emphasis { color: var(--brand-primary-dark) !important; }
+html[data-theme="dark"] .badge.text-primary-emphasis { color: var(--brand-primary-light) !important; }
+
+.badge.bg-success   { background-color: #16a34a !important; }
+.badge.bg-warning   { background-color: #d97706 !important; }
+.badge.bg-danger    { background-color: #dc2626 !important; }
+.badge.bg-secondary { background-color: #64748b !important; }
+
+.badge-role { letter-spacing: .06em; }
+
+/* -----------------------------------------------------------
+   8. Alerty
+   ----------------------------------------------------------- */
+.alert {
+    border: none;
+    border-left: 4px solid transparent;
+    border-radius: var(--radius-sm);
+    background-color: var(--brand-surface);
+    box-shadow: var(--shadow-sm);
+}
+
+.alert-success { border-left-color: #16a34a; background-color: rgba(22, 163, 74, .08); color: #14532d; }
+.alert-danger  { border-left-color: #dc2626; background-color: rgba(220, 38, 38, .07); color: #7f1d1d; }
+html[data-theme="dark"] .alert-success { color: #86efac; }
+html[data-theme="dark"] .alert-danger  { color: #fca5a5; }
+
+/* -----------------------------------------------------------
+   9. Formularze
+   ----------------------------------------------------------- */
+.form-label { font-weight: 600; font-size: .9rem; color: var(--brand-ink); }
+
+.form-control,
+.form-select {
+    border-radius: var(--radius-sm);
+    border-color: var(--brand-border);
+    background-color: var(--brand-surface);
+    color: var(--brand-ink);
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 .2rem rgba(var(--brand-primary-rgb), .16);
+}
+
+.form-check-input:checked { background-color: var(--brand-primary); border-color: var(--brand-primary); }
+.form-check-input:focus { box-shadow: 0 0 0 .2rem rgba(var(--brand-primary-rgb), .16); }
+.form-text { color: var(--brand-muted); }
+
+/* -----------------------------------------------------------
+   10. Tabele
+   ----------------------------------------------------------- */
+.table-responsive {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    background: var(--brand-surface);
+    border: 1px solid var(--brand-border);
+}
+
+.table { margin-bottom: 0; vertical-align: middle; color: var(--brand-ink); }
+
+.table thead th {
+    background-color: var(--brand-bg);
+    color: var(--brand-ink);
+    font-weight: 700;
+    font-size: .78rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    border-bottom-width: 1px;
+    white-space: nowrap;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+    background-color: rgba(var(--brand-primary-rgb), .025);
+    color: var(--brand-ink);
+}
+
+.table > tbody > tr:hover > * {
+    background-color: rgba(var(--brand-primary-rgb), .06);
+}
+
+.table td, .table th { border-color: var(--brand-border); }
+
+/* -----------------------------------------------------------
+   11. Listy
+   ----------------------------------------------------------- */
+.list-group-item {
+    background-color: var(--brand-surface);
+    color: var(--brand-ink);
+    border-color: var(--brand-border);
+    transition: background-color var(--transition-base);
+}
+
+.list-group-item-action:hover { background-color: var(--brand-bg); }
+
+.list-group-item.active {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+}
+
+/* -----------------------------------------------------------
+   12. Zakładki i paginacja
+   ----------------------------------------------------------- */
+.nav-tabs { border-bottom-color: var(--brand-border); }
+
+.nav-tabs .nav-link {
+    border: none;
+    border-radius: var(--radius-pill);
+    padding: .5rem 1.1rem;
+    margin-right: .35rem;
+    color: var(--brand-muted);
+    font-weight: 600;
+}
+
+.nav-tabs .nav-link:hover { background-color: var(--brand-bg); border-color: transparent; }
+.nav-tabs .nav-link.active { background-color: var(--brand-primary); color: #fff; }
+
+.pagination .page-link {
+    border-radius: var(--radius-pill);
+    margin: 0 .15rem;
+    border: none;
+    background-color: var(--brand-surface);
+    color: var(--brand-primary-dark);
+}
+
+html[data-theme="dark"] .pagination .page-link { color: var(--brand-primary-light); }
+
+.pagination .page-item.active .page-link { background: var(--brand-primary); color: #fff; }
+
+.breadcrumb-item + .breadcrumb-item::before { color: var(--brand-muted); }
+
+/* -----------------------------------------------------------
+   13. Proces rezerwacji
+   ----------------------------------------------------------- */
 .step-indicator {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: .5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
 }
 
 .step-indicator .step {
-    padding: .35rem .9rem;
-    border-radius: 2rem;
-    background: #e9ecef;
-    color: #6c757d;
-    font-size: .875rem;
+    padding: .42rem 1.05rem;
+    border-radius: var(--radius-pill);
+    background: var(--brand-bg);
+    border: 1px solid var(--brand-border);
+    color: var(--brand-muted);
+    font-size: .85rem;
+    font-weight: 600;
+    transition: background-color var(--transition-base), color var(--transition-base), border-color var(--transition-base);
 }
 
 .step-indicator .step.active {
     background: var(--brand-primary);
+    border-color: var(--brand-primary);
     color: #fff;
-    font-weight: 600;
 }
 
 .step-indicator .step.done {
-    background: var(--brand-soft);
-    color: var(--brand-primary);
+    background: rgba(var(--brand-primary-rgb), .12);
+    border-color: transparent;
+    color: var(--brand-primary-dark);
 }
+
+html[data-theme="dark"] .step-indicator .step.done { color: var(--brand-primary-light); }
 
 .slot-btn {
     min-width: 5.5rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
 }
 
-.table-responsive-card th {
-    white-space: nowrap;
+/* -----------------------------------------------------------
+   14. Stopka
+   ----------------------------------------------------------- */
+footer.bg-dark { background: var(--navbar-bg) !important; }
+footer a { color: #cbd5e1; text-decoration: none; }
+footer a:hover { color: #fff; }
+
+/* -----------------------------------------------------------
+   15.  Animacja wejścia 
+   ----------------------------------------------------------- */
+.reveal { opacity: 0; }
+.reveal.reveal-visible { animation: reveal-in .4s ease forwards; }
+
+@keyframes reveal-in { to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; }
 }
 
-footer a {
-    color: #cfd8e3;
+/* -----------------------------------------------------------
+   16. Przełącznik trybu ciemnego 
+   ----------------------------------------------------------- */
+.theme-toggle {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 1050;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 1px solid var(--brand-border);
+    background: var(--brand-surface);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: var(--brand-primary-dark);
+    cursor: pointer;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 
-.badge-role {
-    text-transform: uppercase;
-    font-size: .7rem;
-    letter-spacing: .04em;
+html[data-theme="dark"] .theme-toggle { color: #fbbf24; }
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
+
+.theme-toggle:active { transform: translateY(0); }
 
 @media (max-width: 576px) {
-    .hero {
-        padding: 2rem 1.25rem;
+    .theme-toggle {
+        right: .85rem;
+        bottom: .85rem;
+        width: 2.75rem;
+        height: 2.75rem;
+        font-size: 1rem;
     }
+}
+
+/* -----------------------------------------------------------
+   17. Drobiazgi
+   ----------------------------------------------------------- */
+.btn-close:focus { box-shadow: 0 0 0 .2rem rgba(var(--brand-primary-rgb), .22); }
+
+code {
+    color: var(--brand-primary-dark);
+    background: rgba(var(--brand-primary-rgb), .1);
+    padding: .1rem .4rem;
+    border-radius: .4rem;
+}
+
+html[data-theme="dark"] code { color: var(--brand-primary-light); }
+
+@media (max-width: 576px) {
+    .hero { padding: 2.2rem 1.4rem; }
 }
