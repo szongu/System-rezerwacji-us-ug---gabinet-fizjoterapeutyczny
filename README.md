@@ -1,4 +1,5 @@
-# System rezerwacji usług - Gabinet Fizjoterapii
+# System rezerwacji usług - Gabinet Fizjoterapii 
+gabinetfizjoterapii.xo.je
 
 Projekt semestralny z przedmiotu **Tworzenie stron i aplikacji internetowych**
 (klasa 5 technikum informatycznego, wrzesień-listopad 2026).
