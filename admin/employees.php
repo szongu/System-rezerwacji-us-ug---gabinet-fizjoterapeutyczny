@@ -73,3 +73,68 @@ $pageTitle = 'Pracownicy';
 require __DIR__ . '/../includes/header.php';
 require __DIR__ . '/_nav.php';
 ?>
+
+<h1 class="h3 mb-4">Pracownicy</h1>
+
+<?php if (!empty($errors)): ?>
+    <div class="alert alert-danger"><?php foreach ($errors as $err): ?><div><?= e($err) ?></div><?php endforeach; ?></div>
+<?php endif; ?>
+
+<div class="card mb-4">
+    <div class="card-header">Dodaj nowego pracownika</div>
+    <div class="card-body">
+        <form method="post" class="row g-3">
+            <?= csrfField() ?>
+            <input type="hidden" name="action" value="create">
+            <div class="col-md-3">
+                <label class="form-label">Imię</label>
+                <input type="text" name="first_name" class="form-control" required value="<?= e($formValues['first_name']) ?>">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Nazwisko</label>
+                <input type="text" name="last_name" class="form-control" required value="<?= e($formValues['last_name']) ?>">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">E-mail</label>
+                <input type="email" name="email" class="form-control" required value="<?= e($formValues['email']) ?>">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Telefon</label>
+                <input type="text" name="phone" class="form-control" required value="<?= e($formValues['phone']) ?>">
+            </div>
+            <div class="col-md-9">
+                <label class="form-label">Opis / specjalizacja</label>
+                <input type="text" name="description" class="form-control" value="<?= e($formValues['description']) ?>">
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Dodaj pracownika</button>
+            </div>
+        </form>
+        <p class="form-text mb-0 mt-2">System wygeneruje tymczasowe hasło logowania, które zostanie wyświetlone po dodaniu.</p>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead><tr><th>Imię i nazwisko</th><th>Kontakt</th><th>Przypisane usługi</th><th>Status</th><th class="text-end">Akcje</th></tr></thead>
+        <tbody>
+        <?php foreach ($employees as $emp): ?>
+            <tr>
+                <td><?= e($emp['first_name'] . ' ' . $emp['last_name']) ?></td>
+                <td class="small text-muted"><?= e($emp['email']) ?><br><?= e($emp['phone']) ?></td>
+                <td><?= (int) $emp['services_count'] ?></td>
+                <td><span class="badge <?= $emp['active'] ? 'bg-success' : 'bg-secondary' ?>"><?= $emp['active'] ? 'Aktywny' : 'Nieaktywny' ?></span></td>
+                <td class="text-end">
+                    <a href="<?= e(basePath('admin/employee_edit.php?id=' . $emp['id'])) ?>" class="btn btn-sm btn-outline-primary">Zarządzaj</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+        <?php if (empty($employees)): ?>
+            <tr><td colspan="5" class="text-center text-muted py-3">Brak pracowników.</td></tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<?php require __DIR__ . '/_nav_end.php'; ?>
+<?php require __DIR__ . '/../includes/footer.php'; ?>
